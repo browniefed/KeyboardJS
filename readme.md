@@ -1,5 +1,8 @@
 # KeyboardJS
 
+## This version is just a RequireJS module, this just makes it work with AMDClean. No other modifications were made. All rights and props still go to Robert W Hurst. Contribute and endorse him if you like the library.
+
+
 [![Endorse](http://api.coderwall.com/robertwhurst/endorsecount.png)](http://coderwall.com/robertwhurst)
 [![Flattr This](http://api.flattr.com/button/flattr-badge-large.png)](http://flattr.com/thing/1381991)
 
