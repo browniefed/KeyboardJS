@@ -9,84 +9,13 @@
  * Licenced under the BSD License.
  * See https://raw.github.com/RobertWHurst/KeyboardJS/master/license.txt
  */
-(function(context, factory) {
+
+//Makes this AMDCleanable as just a simple RequireJS module
+define([], function() {
 
 	//INDEXOF POLLYFILL
 	[].indexOf||(Array.prototype.indexOf=function(a,b,c){for(c=this.length,b=(c+~~b)%c;b<c&&(!(b in this)||this[b]!==a);b++);return b^c?b:-1;});
 
-	//AMD
-	if(typeof define === 'function' && define.amd) { define(constructAMD); }
-
-	//GLOBAL
-	else { constructGlobal(); }
-
-	/**
-	 * Construct AMD version of the library
-	 */
-	function constructAMD() {
-
-		//create a library instance
-		return init();
-
-		//spawns a library instance
-		function init() {
-			var library;
-			library = factory('amd');
-			library.fork = init;
-			return library;
-		}
-	}
-
-	/**
-	 * Construct a Global version of the library
-	 */
-	function constructGlobal() {
-		var library;
-
-		//create a library instance
-		library = init();
-		library.noConflict('KeyboardJS', 'k');
-
-		//spawns a library instance
-		function init() {
-			var library, namespaces = [], previousValues = {};
-
-			library = factory('global');
-			library.fork = init;
-			library.noConflict = noConflict;
-			return library;
-
-			//sets library namespaces
-			function noConflict(    ) {
-				var args, nI, newNamespaces;
-
-				newNamespaces = Array.prototype.slice.apply(arguments);
-
-				for(nI = 0; nI < namespaces.length; nI += 1) {
-					if(typeof previousValues[namespaces[nI]] === 'undefined') {
-						delete context[namespaces[nI]];
-					} else {
-						context[namespaces[nI]] = previousValues[namespaces[nI]];
-					}
-				}
-
-				previousValues = {};
-
-				for(nI = 0; nI < newNamespaces.length; nI += 1) {
-					if(typeof newNamespaces[nI] !== 'string') {
-						throw new Error('Cannot replace namespaces. All new namespaces must be strings.');
-					}
-					previousValues[newNamespaces[nI]] = context[newNamespaces[nI]];
-					context[newNamespaces[nI]] = library;
-				}
-
-				namespaces = newNamespaces;
-
-				return namespaces;
-			}
-		}
-	}
-})(this, function(env) {
 	var KeyboardJS = {}, locales = {}, locale, map, macros, activeKeys = [], bindings = [], activeBindings = [],
 	activeMacros = [], aI, usLocale;
 
